@@ -10,7 +10,7 @@ class AvaliacaoCategoria extends Component {
                     this.props.categorias.map((categoria, i) => {
                         return (
                             <div className="avaliacaoCategoria" key={i}>
-                                <h2 className="text-white bg-secondary">{categoria.titulo}</h2>
+                                <h3 className="text-dark bg-secondary">{categoria.titulo}</h3>
                                 <AvaliacaoResposta
                                     classificacoes={categoria.classificacoes}
                                     respostas={categoria.respostas} />
