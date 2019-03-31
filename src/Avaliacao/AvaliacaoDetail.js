@@ -17,7 +17,7 @@ class AvaliacaoDetail extends Component {
 
     componentDidMount() {
         const { id } = this.props.match.params
-        axios.get(url + 'avaliacoes/' + id)
+        axios.get(url + '/avaliacoes/' + id)
             .then(res => {
                 this.setState(state => ({
                     avaliacao: res.data
