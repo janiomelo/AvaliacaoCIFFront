@@ -1,0 +1,26 @@
+.submitButton {
+    margin-top: 1rem;
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+    width: 100%;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.avaliacaoCardList {
+    margin-top: 10px
+}
+.verButton {
+    width: 100%;
+}
+.avaliacaoResposta {
+    padding: 7px 0px;
+    border-bottom: 1px dashed #a2a2a2;
+}
+.avaliacaoCategoria h2 {
+    padding: 10px 10px;
+    margin: 20px 0px;
+    width: 100%;
+}
+.avaliacaoHeader p {
+    margin-bottom: 0.2rem;
+}

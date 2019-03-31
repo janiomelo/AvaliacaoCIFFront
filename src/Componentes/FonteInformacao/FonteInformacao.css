@@ -1,0 +1,11 @@
+.fontesInformacao {
+    margin-top: 1em;
+    padding: 10px 0px;
+}
+.fontesInformacao .custom-radio {
+    margin: 0px 15px;
+}
+.labelFonteInformacao {
+    float: left;
+    width: 170px;
+}

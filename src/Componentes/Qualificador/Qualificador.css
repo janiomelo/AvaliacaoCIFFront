@@ -1,0 +1,11 @@
+.checkGroup {
+    padding: 10px 0px;
+}
+.checkGroup .custom-radio {
+    margin: 0px 15px;
+}
+.descricaoQualificador {
+    margin-left: 15px;
+    float: left;
+    width: 150px;
+}

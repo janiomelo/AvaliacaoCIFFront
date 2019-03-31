@@ -1,0 +1,9 @@
+.small, small {
+    font-size: 88%;
+}
+.form-text {
+    margin-top: .5rem !important;
+}
+.qualificadores {
+    margin-top: 1em;
+}
