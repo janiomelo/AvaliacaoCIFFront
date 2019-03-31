@@ -59,7 +59,7 @@ const CategoriaButton = (props) => {
                     {props.label}
                 </div>
                 <div className="col-md-1">
-                    <IconeCompleto categoriaId={props.categoriaId} />
+                    <IconeCompleto ok={props.respostasOk} categoriaId={props.categoriaId} />
                 </div>
             </div>
         </Button>
@@ -74,7 +74,10 @@ class Categoria extends Component {
             respostas: []
         };
         this.toggle = this.toggle.bind(this);
-        this.state = { collapse: false };
+        this.state = {
+            collapse: false,
+            respostasOk: false
+        };
     }
 
     setResposta = (resposta) => {
@@ -85,10 +88,49 @@ class Categoria extends Component {
         });
         this.respostasCategoria.respostas.push(resposta);
         this.props.onResponder(this.respostasCategoria);
+        this.atualizaRespostasOk();
     }
 
     toggle() {
         this.setState(state => ({ collapse: !state.collapse }));
+    }
+
+    atualizaRespostasOk() {
+        /*
+        # this.respostasCategoria #
+        {categoria: 1, respostas: Array(1)}
+            {pergunta: 1, qualificadores: Array(1), fonteInformacao: null}
+                {qualificador: 2, classificacao: "3"}
+        */
+        let respostasCategoria = this.respostasCategoria.respostas;
+        let faltaResposta = false;
+        this.props.dados.perguntas.forEach(pergunta => {
+            if (!respostasCategoria.find(x => x.pergunta === pergunta.id)) {
+                faltaResposta = true;
+            }
+        });
+
+        let faltaFonte = false;
+        respostasCategoria.forEach(resposta => {
+            if (!resposta.fonteInformacao) {
+                faltaFonte = true;
+            }
+        });
+
+        let faltaQualificador = false;
+        this.props.dados.qualificadores.forEach(qualificador => {
+            respostasCategoria.forEach(resposta => {
+                if (!resposta.qualificadores.find(x => x.qualificador === qualificador.id)) {
+                    faltaQualificador = true;
+                }
+            })
+        })
+
+        if (!faltaResposta && !faltaQualificador && !faltaFonte) {
+            this.setState(state => ({
+                respostasOk: true
+            }))
+        }
     }
 
     render() {
@@ -101,7 +143,7 @@ class Categoria extends Component {
                     categoriaId={id}
                     label={titulo}
                     toggleFunction={this.toggle}
-                    ok={false} />
+                    respostasOk={this.state.respostasOk} />
                 <Collapse isOpen={this.state.collapse}>
                     <Card>
                         <CardHeader>
