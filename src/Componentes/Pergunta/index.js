@@ -6,6 +6,7 @@ import Qualificador from '../Qualificador';
 import FonteInformacao from '../FonteInformacao';
 import './Pergunta.css';
 
+const TituloPergunta = (props) => <span>{props.pergunta.codigo} - {props.pergunta.titulo}</span>;
 
 class Pergunta extends Component {
     constructor(props) {
@@ -46,10 +47,12 @@ class Pergunta extends Component {
     }
 
     render() {
-        const { titulo, descricao, id } = this.props.dados;
+        const { descricao, id } = this.props.dados;
         return (
             <FormGroup tag="fieldset">
-                <legend>{titulo}</legend>
+                <legend>
+                    <TituloPergunta pergunta={this.props.dados} />
+                </legend>
                 <FormText>{descricao}</FormText>
                 <div className="qualificadores offset-md-3 col-md-9">
                     {this.props.qualificadores ? (
