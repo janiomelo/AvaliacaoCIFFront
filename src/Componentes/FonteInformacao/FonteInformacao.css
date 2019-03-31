@@ -5,7 +5,12 @@
 .fontesInformacao .custom-radio {
     margin: 0px 15px;
 }
+.custom-control-label {
+    font-weight: normal;
+}
 .labelFonteInformacao {
     float: left;
     width: 170px;
+    font-size: 0.9em;
+    font-weight: bold;
 }

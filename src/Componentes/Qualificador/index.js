@@ -29,7 +29,7 @@ class Classificacao extends Component {
         return (
             <div>
                 <CustomInput
-                    className="float-left text-white"
+                    className="float-left text-dark"
                     type="radio"
                     id={inputId}
                     name={name}
@@ -70,7 +70,7 @@ class Qualificador extends Component {
         const { descricao, id } = this.props.dados;
         return (
             <div className="checkGroup bg-secondary clearfix">
-                <span className="text-white descricaoQualificador">
+                <span className="text-dark descricaoQualificador">
                     {descricao}
                 </span>
                 <div className="clearfix">

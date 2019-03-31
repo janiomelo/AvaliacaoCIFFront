@@ -1,5 +1,6 @@
 .checkGroup {
-    padding: 10px 0px;
+    padding: 5px 0px;
+    font-size: 0.9em;
 }
 .checkGroup .custom-radio {
     margin: 0px 15px;

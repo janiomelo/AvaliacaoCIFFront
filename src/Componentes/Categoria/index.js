@@ -32,7 +32,7 @@ class IconeCompleto extends Component {
         const texto = ok ? "Categoria preenchida corretamente" :
             "Preencha todas as perguntas";
         return (
-            <div>
+            <div className={this.props.className}>
                 <FontAwesomeIcon icon={icone} color={cor} id={id} />
                 <Tooltip
                     placement="top"
@@ -54,13 +54,14 @@ const CategoriaButton = (props) => {
             color="light"
             onClick={props.toggleFunction}
             className="categoriaButton">
-            <div className="row">
-                <div className="col-md-11">
+            <div className="clearfix">
+                <div className="float-left">
                     {props.label}
                 </div>
-                <div className="col-md-1">
-                    <IconeCompleto ok={props.respostasOk} categoriaId={props.categoriaId} />
-                </div>
+                <IconeCompleto
+                    className="float-right mr-3"
+                    ok={props.respostasOk}
+                    categoriaId={props.categoriaId} />
             </div>
         </Button>
     );
@@ -69,15 +70,16 @@ const CategoriaButton = (props) => {
 class Categoria extends Component {
     constructor(props) {
         super(props);
-        this.respostasCategoria = {
-            categoria: this.props.dados.id,
-            respostas: []
-        };
-        this.toggle = this.toggle.bind(this);
         this.state = {
             collapse: false,
             respostasOk: false
         };
+        this.respostasCategoria = {
+            categoria: this.props.dados.id,
+            valido: this.state.respostasOk,
+            respostas: []
+        };
+        this.toggle = this.toggle.bind(this);
     }
 
     setResposta = (resposta) => {
@@ -87,8 +89,8 @@ class Categoria extends Component {
             }
         });
         this.respostasCategoria.respostas.push(resposta);
-        this.props.onResponder(this.respostasCategoria);
         this.atualizaRespostasOk();
+        this.props.onResponder(this.respostasCategoria);
     }
 
     toggle() {
@@ -96,12 +98,7 @@ class Categoria extends Component {
     }
 
     atualizaRespostasOk() {
-        /*
-        # this.respostasCategoria #
-        {categoria: 1, respostas: Array(1)}
-            {pergunta: 1, qualificadores: Array(1), fonteInformacao: null}
-                {qualificador: 2, classificacao: "3"}
-        */
+        this.respostasCategoria.valido = false;
         let respostasCategoria = this.respostasCategoria.respostas;
         let faltaResposta = false;
         this.props.dados.perguntas.forEach(pergunta => {
@@ -127,6 +124,7 @@ class Categoria extends Component {
         })
 
         if (!faltaResposta && !faltaQualificador && !faltaFonte) {
+            this.respostasCategoria.valido = true;
             this.setState(state => ({
                 respostasOk: true
             }))
@@ -147,7 +145,9 @@ class Categoria extends Component {
                 <Collapse isOpen={this.state.collapse}>
                     <Card>
                         <CardHeader>
-                            {descricao}
+                            <small>
+                                {descricao}
+                            </small>
                         </CardHeader>
                         <CardBody>
                             {perguntas ? (
