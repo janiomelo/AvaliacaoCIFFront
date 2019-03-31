@@ -30,8 +30,27 @@ class AvaliacaoForm extends Component {
         this.avaliacao.respostas.push(respostas);
     }
 
+    validarCategorias() {
+        let todasValidas = true;
+        this.state.categorias.forEach(categoria => {
+            let resposta = this.avaliacao.respostas.find(x => x.categoria === categoria.id);
+            if (!resposta) {
+                todasValidas = false;
+            } else {
+                if (!resposta.valido) {
+                    todasValidas = false;
+                }
+            }
+
+        });
+        return todasValidas;
+    }
+
     handleSubmit(event) {
         event.preventDefault();
+        if (!this.validarCategorias()) {
+            return
+        }
         this.toastId = toast.info("Registrando avaliação", {
             autoClose: false,
             position: toast.POSITION.TOP_CENTER
