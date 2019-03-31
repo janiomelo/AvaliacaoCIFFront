@@ -3,6 +3,7 @@ import {
     CustomInput
 } from 'reactstrap';
 import axios from 'axios';
+import url from '../../server';
 import './FonteInformacao.css';
 
 
@@ -42,7 +43,7 @@ class FonteInformacao extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://127.0.0.1:8000/fontes-informacao')
+        axios.get(url + '/fontes-informacao')
             .then(res => {
                 this.setState(state => ({
                     fontesInformacao: res.data

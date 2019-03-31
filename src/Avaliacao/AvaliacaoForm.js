@@ -5,6 +5,7 @@ import {
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import Categoria from '../Componentes/Categoria';
+import url from '../server';
 import './Avaliacao.css';
 
 class AvaliacaoForm extends Component {
@@ -37,7 +38,7 @@ class AvaliacaoForm extends Component {
         });
         let msg;
         this.avaliacao.coreSet = this.state.id;
-        axios.post('http://127.0.0.1:8000/avaliar/', this.avaliacao)
+        axios.post(url + '/avaliar/', this.avaliacao)
             .then(res => {
                 msg = "Avaliação registrada com sucesso!"
                 toast.update(this.toastId, {
@@ -70,7 +71,7 @@ class AvaliacaoForm extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://127.0.0.1:8000/core-sets/1/')
+        axios.get(url + '/core-sets/1/')
             .then(res => {
                 this.setState(res.data);
             })

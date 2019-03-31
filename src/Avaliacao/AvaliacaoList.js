@@ -4,6 +4,7 @@ import {
 } from 'reactstrap';
 import axios from 'axios';
 import Moment from 'react-moment';
+import url from '../server';
 import './Avaliacao.css';
 
 class AvaliacaoList extends Component {
@@ -14,7 +15,7 @@ class AvaliacaoList extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://127.0.0.1:8000/avaliacoes/')
+        axios.get(url + '/avaliacoes/')
             .then(res => {
                 this.setState(state => ({
                     avaliacoes: res.data

@@ -6,6 +6,7 @@ import axios from 'axios';
 import AvaliacaoFooter from './AvaliacaoFooter';
 import AvaliacaoCategoria from './AvaliacaoCategoria';
 import AvaliacaoHeader from './AvaliacaoHeader';
+import url from '../server';
 import './Avaliacao.css';
 
 class AvaliacaoDetail extends Component {
@@ -16,7 +17,7 @@ class AvaliacaoDetail extends Component {
 
     componentDidMount() {
         const { id } = this.props.match.params
-        axios.get('http://127.0.0.1:8000/avaliacoes/' + id)
+        axios.get(url + 'avaliacoes/' + id)
             .then(res => {
                 this.setState(state => ({
                     avaliacao: res.data
