@@ -29,7 +29,7 @@ class Classificacao extends Component {
         return (
             <div>
                 <CustomInput
-                    className="float-left text-dark"
+                    className="float-left text-dark ml-3"
                     type="radio"
                     id={inputId}
                     name={name}
