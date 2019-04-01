@@ -49,7 +49,11 @@ class AvaliacaoForm extends Component {
     handleSubmit(event) {
         event.preventDefault();
         if (!this.validarCategorias()) {
-            return
+            toast.error("Preencha todas as categorias", {
+                autoClose: 5000,
+                position: toast.POSITION.TOP_CENTER
+            });
+            return;
         }
         this.toastId = toast.info("Registrando avaliação", {
             autoClose: false,
