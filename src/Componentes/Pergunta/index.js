@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-    FormGroup, Label, Input, FormText
+    FormGroup, Label, Input, FormText, Row, Col
 } from 'reactstrap';
 import Qualificador from '../Qualificador';
 import FonteInformacao from '../FonteInformacao';
@@ -54,20 +54,22 @@ class Pergunta extends Component {
                     <TituloPergunta pergunta={this.props.dados} />
                 </legend>
                 <FormText>{descricao}</FormText>
-                <div className="qualificadores offset-md-3 col-md-9">
-                    {this.props.qualificadores ? (
-                        this.props.qualificadores.map((qualificador, i) => {
-                            return (
-                                <Qualificador
-                                    key={i}
-                                    dados={qualificador}
-                                    perguntaId={id}
-                                    classificacoes={this.props.classificacoes}
-                                    onChange={this.changeQualificador} />
-                            )
-                        })
-                    ) : null}
-                </div>
+                <Row className="qualificadores">
+                    <Col lg={{ size: 7, offset: 5 }}>
+                        {this.props.qualificadores ? (
+                            this.props.qualificadores.map((qualificador, i) => {
+                                return (
+                                    <Qualificador
+                                        key={i}
+                                        dados={qualificador}
+                                        perguntaId={id}
+                                        classificacoes={this.props.classificacoes}
+                                        onChange={this.changeQualificador} />
+                                )
+                            })
+                        ) : null}
+                    </Col>
+                </Row>
                 <FonteInformacao perguntaId={id} onChange={this.changeFonteInformacao} />
                 <FormGroup>
                     <Label>Comentário</Label>

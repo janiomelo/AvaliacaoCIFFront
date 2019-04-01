@@ -71,7 +71,7 @@ class Categoria extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            collapse: false,
+            collapse: true,
             respostasOk: false
         };
         this.respostasCategoria = {

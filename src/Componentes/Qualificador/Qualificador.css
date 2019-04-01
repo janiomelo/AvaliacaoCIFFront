@@ -1,12 +1,14 @@
 .checkGroup {
-    padding: 5px 0px;
     font-size: 0.9em;
+    margin-top: 13px;
 }
-.checkGroup .custom-radio {
-    margin: 0px 15px;
+button{
+    padding: 15px;
+    background-color: #1db4ff;
+    margin: 5px;
+    border: 1px solid #222;
+    outline: none;
 }
-.descricaoQualificador {
-    margin-left: 15px;
-    float: left;
-    width: 150px;
+button:active{
+    background-color: #24b47a;
 }
