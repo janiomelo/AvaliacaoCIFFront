@@ -75,6 +75,9 @@ class AvaliacaoForm extends Component {
                     autoClose: 5000,
                     position: toast.POSITION.TOP_CENTER
                 });
+                let id = res.data.avaliacao.id;
+                let path = "/avaliacoes/" + id + "/ver/";
+                this.props.history.push(path);
             })
             .catch(error => {
                 if (!error.response.data) {
