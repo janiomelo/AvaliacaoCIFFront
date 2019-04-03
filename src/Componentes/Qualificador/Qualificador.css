@@ -1,14 +1,32 @@
 .checkGroup {
     font-size: 0.9em;
-    margin-top: 13px;
 }
-button{
-    padding: 15px;
-    background-color: #1db4ff;
-    margin: 5px;
-    border: 1px solid #222;
-    outline: none;
+.custom-control-label::before,
+.custom-control-label {
+    cursor: pointer;
 }
-button:active{
-    background-color: #24b47a;
+.custom-control-label {
+    padding-left: 0.5em;
+}
+.custom-control-label::before {
+    left: -1.0rem !important;
+    position: absolute;
+    top: .25rem;
+    display: block;
+    width: 1rem;
+    height: 1rem;
+    pointer-events: none;
+    content: "";
+    background-color: #fff;
+    border: #adb5bd solid 1px;
+}
+.custom-control-label::after {
+    left: -1.0rem !important;
+    position: absolute;
+    top: .25rem;
+    display: block;
+    width: 1rem;
+    height: 1rem;
+    content: "";
+    background: no-repeat 50%/50% 50%;
 }

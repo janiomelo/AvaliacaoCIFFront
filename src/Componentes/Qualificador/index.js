@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 import {
-    CustomInput, Tooltip
+    CustomInput, Tooltip, Row, Col
 } from 'reactstrap';
+import { uniqueId } from 'lodash';
 import './Qualificador.css';
 
 
 class Classificacao extends Component {
     constructor(props) {
         super(props);
+        this.idInput = uniqueId('classificacao_');
+        this.name = "qualificador_" + this.props.pergunta + "_" + this.props.qualificador;
+
         this.toggle = this.toggle.bind(this);
         this.state = {
             tooltipOpen: false
@@ -22,17 +26,13 @@ class Classificacao extends Component {
 
     render() {
         const { nivel, descricao, id } = this.props.dados;
-        let qualificador = this.props.qualificador;
-        let pergunta = this.props.pergunta;
-        const inputId = "classificacao-" + pergunta + "-" + qualificador + "-" + nivel;
-        const name = "classificacao-" + pergunta + "-" + qualificador;
+        const idCampo = "id-" + this.idInput;
         return (
-            <div>
+            <div id={this.idInput} className="float-left ml-2">
                 <CustomInput
-                    className="float-left text-dark ml-3"
                     type="radio"
-                    id={inputId}
-                    name={name}
+                    id={idCampo}
+                    name={this.name}
                     value={id}
                     label={nivel}
                     onChange={this.props.onChange} />
@@ -40,7 +40,7 @@ class Classificacao extends Component {
                     placement="top"
                     isOpen={this.state.tooltipOpen}
                     autohide={false}
-                    target={inputId}
+                    target={this.idInput}
                     toggle={this.toggle}>
                     {descricao}
                 </Tooltip>
@@ -69,11 +69,11 @@ class Qualificador extends Component {
     render() {
         const { descricao, id } = this.props.dados;
         return (
-            <div className="checkGroup bg-secondary clearfix">
-                <span className="text-dark descricaoQualificador">
+            <Row className="checkGroup bg-secondary mt-2 p-1">
+                <Col lg={3} className="text-right">
                     {descricao}
-                </span>
-                <div className="clearfix">
+                </Col>
+                <Col className="clearfix" lg={9}>
                     {this.props.classificacoes ? (
                         this.props.classificacoes.map((classificacao, i) => {
                             return (
@@ -86,8 +86,8 @@ class Qualificador extends Component {
                             )
                         })
                     ) : null}
-                </div>
-            </div>
+                </Col>
+            </Row>
         );
     }
 }
