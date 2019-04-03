@@ -13,10 +13,12 @@ class Pergunta extends Component {
         super(props);
         this.changeQualificador = this.changeQualificador.bind(this);
         this.changeFonteInformacao = this.changeFonteInformacao.bind(this);
+        this.changeDescricao = this.changeDescricao.bind(this);
         this.resposta = {
             pergunta: this.props.dados.id,
             qualificadores: [],
-            fonteInformacao: null
+            fonteInformacao: null,
+            descricao: null
         };
     }
 
@@ -38,6 +40,12 @@ class Pergunta extends Component {
 
     changeQualificador(selecionado) {
         this.setQualificador(selecionado);
+    }
+
+    changeDescricao(event) {
+        let resposta = this.resposta;
+        resposta.descricao = event.target.value;
+        this.setResposta(resposta);
     }
 
     changeFonteInformacao(selecionado) {
@@ -72,8 +80,12 @@ class Pergunta extends Component {
                 </Row>
                 <FonteInformacao perguntaId={id} onChange={this.changeFonteInformacao} />
                 <FormGroup>
-                    <Label>Comentário</Label>
-                    <Input type="textarea" name="text" id="exampleText" />
+                    <Label>Descrição do problema</Label>
+                    <Input
+                        type="textarea"
+                        name="text"
+                        id="descricao"
+                        onChange={this.changeDescricao} />
                 </FormGroup>
             </FormGroup>
         );
