@@ -17,23 +17,24 @@ class AvaliacaoForm extends Component {
             categorias: []
         };
         this.avaliacao = {
-            respostas: []
+            categorias: []
         };
     }
 
-    setRespostas(respostas) {
-        this.avaliacao.respostas.forEach((r, i) => {
-            if (r.categoria === respostas.categoria) {
-                this.avaliacao.respostas.splice(i, 1);
+    setRespostas(categoriasRespostas) {
+        this.avaliacao.categorias.forEach((c, i) => {
+            if (c.categoria === categoriasRespostas.categoria) {
+                this.avaliacao.categorias.splice(i, 1);
             }
         });
-        this.avaliacao.respostas.push(respostas);
+        this.avaliacao.categorias.push(categoriasRespostas);
     }
 
     validarCategorias() {
         let todasValidas = true;
         this.state.categorias.forEach(categoria => {
-            let resposta = this.avaliacao.respostas.find(x => x.categoria === categoria.id);
+            let resposta = this.avaliacao.categorias.find(
+                x => x.categoria === categoria.id);
             if (!resposta) {
                 todasValidas = false;
             } else {

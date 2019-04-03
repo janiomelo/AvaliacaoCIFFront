@@ -76,7 +76,7 @@ class Categoria extends Component {
         };
         this.respostasCategoria = {
             categoria: this.props.dados.id,
-            valido: this.state.respostasOk,
+            valido: false,
             respostas: []
         };
         this.toggle = this.toggle.bind(this);
@@ -85,7 +85,7 @@ class Categoria extends Component {
     setResposta = (resposta) => {
         this.respostasCategoria.respostas.forEach((p, i) => {
             if (p.pergunta === resposta.pergunta) {
-                this.respostasCategoria.respostas.slice(i, 1);
+                this.respostasCategoria.respostas.splice(i, 1);
             }
         });
         this.respostasCategoria.respostas.push(resposta);

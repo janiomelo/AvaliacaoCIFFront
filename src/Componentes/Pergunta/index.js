@@ -31,7 +31,7 @@ class Pergunta extends Component {
         let respostaTemp = this.resposta;
         respostaTemp.qualificadores.forEach((q, i) => {
             if (q.qualificador === obj.qualificador) {
-                respostaTemp.qualificadores.slice(i, 1);
+                respostaTemp.qualificadores.splice(i, 1);
             }
         });
         respostaTemp.qualificadores.push(obj);
