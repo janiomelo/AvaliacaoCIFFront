@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
     Card, Button, CardBody, CardTitle, CardText, Row, Col
 } from 'reactstrap';
+import Loading from '../Componentes/Loading';
 import axios from 'axios';
 import Moment from 'react-moment';
 import url from '../server';
@@ -11,14 +12,17 @@ class AvaliacaoList extends Component {
     constructor(props) {
         super(props);
         this.routeChange = this.routeChange.bind(this);
-        this.state = {};
+        this.state = {
+            loading: true
+        };
     }
 
     componentDidMount() {
         axios.get(url + '/avaliacoes/')
             .then(res => {
                 this.setState(state => ({
-                    avaliacoes: res.data
+                    avaliacoes: res.data,
+                    loading: false
                 }));
             })
     }
@@ -33,6 +37,7 @@ class AvaliacaoList extends Component {
         return (
             <div>
                 <h2>Avaliações</h2>
+                <Loading loading={this.state.loading} />
                 {this.state.avaliacoes ? (
                     this.state.avaliacoes.map((avaliacao, i) => {
                         return (

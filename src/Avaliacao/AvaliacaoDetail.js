@@ -3,6 +3,7 @@ import {
     Card, CardBody
 } from 'reactstrap';
 import axios from 'axios';
+import Loading from '../Componentes/Loading';
 import AvaliacaoFooter from './AvaliacaoFooter';
 import AvaliacaoCategoria from './AvaliacaoCategoria';
 import AvaliacaoHeader from './AvaliacaoHeader';
@@ -12,7 +13,9 @@ import './Avaliacao.css';
 class AvaliacaoDetail extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            loading: true
+        };
     }
 
     componentDidMount() {
@@ -20,7 +23,8 @@ class AvaliacaoDetail extends Component {
         axios.get(url + '/avaliacoes/' + id)
             .then(res => {
                 this.setState(state => ({
-                    avaliacao: res.data
+                    avaliacao: res.data,
+                    loading: false
                 }));
             })
     }
@@ -29,6 +33,7 @@ class AvaliacaoDetail extends Component {
         return (
             <div>
                 <h2>Detalhes da Avaliação</h2>
+                <Loading loading={this.state.loading} />
                 {this.state.avaliacao ? (
                     <Card>
                         <AvaliacaoHeader history={this.props.history} avaliacao={this.state.avaliacao} />

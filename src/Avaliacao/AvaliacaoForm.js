@@ -3,6 +3,7 @@ import {
     Form, Button
 } from 'reactstrap';
 import axios from 'axios';
+import Loading from '../Componentes/Loading';
 import { toast } from 'react-toastify';
 import Categoria from '../Componentes/Categoria';
 import url from '../server';
@@ -14,7 +15,10 @@ class AvaliacaoForm extends Component {
         this.setRespostas = this.setRespostas.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.state = {
-            categorias: []
+            coreSet: {
+                categorias: []
+            },
+            loading: true,
         };
         this.avaliacao = {
             categorias: []
@@ -32,7 +36,7 @@ class AvaliacaoForm extends Component {
 
     validarCategorias() {
         let todasValidas = true;
-        this.state.categorias.forEach(categoria => {
+        this.state.coreSet.categorias.forEach(categoria => {
             let resposta = this.avaliacao.categorias.find(
                 x => x.categoria === categoria.id);
             if (!resposta) {
@@ -61,7 +65,7 @@ class AvaliacaoForm extends Component {
             position: toast.POSITION.TOP_CENTER
         });
         let msg;
-        this.avaliacao.coreSet = this.state.id;
+        this.avaliacao.coreSet = this.state.coreSet.id;
         axios.post(url + '/avaliar/', this.avaliacao)
             .then(res => {
                 msg = "Avaliação registrada com sucesso!"
@@ -97,7 +101,10 @@ class AvaliacaoForm extends Component {
     componentDidMount() {
         axios.get(url + '/core-sets/1/')
             .then(res => {
-                this.setState(res.data);
+                this.setState(state => ({
+                    coreSet: res.data,
+                    loading: false
+                }));
             })
     }
 
@@ -105,9 +112,10 @@ class AvaliacaoForm extends Component {
         return (
             <div>
                 <h2>Nova Avaliação</h2>
+                <Loading loading={this.state.loading} />
                 <Form onSubmit={this.handleSubmit}>
-                    {this.state.categorias ? (
-                        this.state.categorias.map((categoria, i) => {
+                    {this.state.coreSet.categorias ? (
+                        this.state.coreSet.categorias.map((categoria, i) => {
                             return (
                                 <Categoria
                                     key={i}
@@ -116,7 +124,7 @@ class AvaliacaoForm extends Component {
                             );
                         })
                     ) : null}
-                    <div>
+                    <div style={{ display: this.state.loading ? 'none' : 'block' }}>
                         <Button
                             type="submit"
                             className="submitButton"
