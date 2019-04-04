@@ -1,70 +1,46 @@
 import React, { Component } from 'react';
 import {
-    Collapse, Button, CardBody, Card, CardHeader,
-    Tooltip
+    Collapse, Button, CardBody, Card, CardHeader
 } from 'reactstrap';
-import { faBan } from '@fortawesome/free-solid-svg-icons/faBan';
-import { faCheckCircle } from '@fortawesome/free-solid-svg-icons/faCheckCircle';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import IconeCompleto from '../Icone/IconeCompleto';
+import IconeAberto from '../Icone/IconeAberto';
 import Pergunta from '../Pergunta';
 import './Categoria.css';
 
-class IconeCompleto extends Component {
+
+class CategoriaButton extends Component {
     constructor(props) {
         super(props);
-        this.toggle = this.toggle.bind(this);
         this.state = {
-            tooltipOpen: false
+            aberto: false,
         };
+        this.toggle = this.toggle.bind(this);
     }
-
     toggle() {
-        this.setState({
-            tooltipOpen: !this.state.tooltipOpen
-        });
+        this.setState(state => ({ aberto: !state.aberto }));
+        this.props.toggleFunction();
     }
-
     render() {
-        const { categoriaId, ok } = this.props;
-        const id = "icone-" + categoriaId;
-        const icone = ok ? faCheckCircle : faBan;
-        const cor = ok ? "green" : "red";
-        const texto = ok ? "Categoria preenchida corretamente" :
-            "Preencha todas as perguntas";
         return (
-            <div className={this.props.className}>
-                <FontAwesomeIcon icon={icone} color={cor} id={id} />
-                <Tooltip
-                    placement="top"
-                    isOpen={this.state.tooltipOpen}
-                    autohide={false}
-                    target={id}
-                    toggle={this.toggle}>
-                    {texto}
-                </Tooltip>
-            </div>
+            <Button
+                color="light"
+                onClick={this.toggle}
+                className="categoriaButton">
+                <div className="clearfix">
+                    <IconeAberto
+                        className="float-left mr-3"
+                        aberto={this.state.aberto} />
+                    <div className="float-left">
+                        {this.props.label}
+                    </div>
+                    <IconeCompleto
+                        className="float-right mr-3"
+                        ok={this.props.respostasOk}
+                        categoriaId={this.props.categoriaId} />
+                </div>
+            </Button>
         );
     }
-}
-
-
-const CategoriaButton = (props) => {
-    return (
-        <Button
-            color="light"
-            onClick={props.toggleFunction}
-            className="categoriaButton">
-            <div className="clearfix">
-                <div className="float-left">
-                    {props.label}
-                </div>
-                <IconeCompleto
-                    className="float-right mr-3"
-                    ok={props.respostasOk}
-                    categoriaId={props.categoriaId} />
-            </div>
-        </Button>
-    );
 };
 
 class Categoria extends Component {
