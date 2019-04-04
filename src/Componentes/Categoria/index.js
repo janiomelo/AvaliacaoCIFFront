@@ -146,7 +146,7 @@ class Categoria extends Component {
                     <Card>
                         <CardHeader>
                             <small>
-                                {descricao}
+                                <div dangerouslySetInnerHTML={{ __html: descricao }} />
                             </small>
                         </CardHeader>
                         <CardBody>

@@ -61,7 +61,9 @@ class Pergunta extends Component {
                 <legend>
                     <TituloPergunta pergunta={this.props.dados} />
                 </legend>
-                <FormText>{descricao}</FormText>
+                <FormText>
+                    <div dangerouslySetInnerHTML={{ __html: descricao }} />
+                </FormText>
                 <Row className="qualificadores">
                     <Col lg={{ size: 7, offset: 5 }}>
                         {this.props.qualificadores ? (
