@@ -7,7 +7,7 @@ if (auth.token) {
 }
 
 const instance = axios.create({
-    baseURL: 'http://127.0.0.1:8000',
+    baseURL: 'https://avaliacaocif.herokuapp.com',
     timeout: 1000,
     headers: headers
 });
