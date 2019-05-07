@@ -12,46 +12,51 @@ import {
     DropdownMenu,
     DropdownItem
 } from 'reactstrap';
+import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons/faSignOutAlt';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { withRouter } from "react-router";
+import auth from '../../auth';
 import './Navegacao.css';
 
 class Navegacao extends React.Component {
     constructor(props) {
         super(props);
-
-        this.toggle = this.toggle.bind(this);
         this.state = {
-            isOpen: false
+            isOpen: false,
         };
     }
-    toggle() {
-        this.setState({
-            isOpen: !this.state.isOpen
+    toggle = () => {
+        this.setState(state => {
+            state.isOpen = !this.state.isOpen;
+            return state;
         });
+    }
+    handleLogout = () => {
+        auth.signout();
+        this.props.history.push("/login")
+    }
+    toHome = () => {
+        this.props.history.push("/")
     }
     render() {
         return (
             <div>
                 <Navbar color="light" light expand="md">
-                    <NavbarBrand href="/">Avaliação Funcional</NavbarBrand>
+                    <NavbarBrand>Avaliação Funcional</NavbarBrand>
                     <NavbarToggler onClick={this.toggle} />
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav className="ml-auto" navbar>
                             <NavItem>
-                                <NavLink href="/">Home</NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink href="/avaliacoes/novo">Nova Avaliação</NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink href="/avaliacoes">Avaliações</NavLink>
+                                <NavLink className="cursor-pointer" onClick={this.toHome}> Home</NavLink>
                             </NavItem>
                             <UncontrolledDropdown nav inNavbar>
                                 <DropdownToggle nav caret>
-                                    Options
+                                    Opções
                                 </DropdownToggle>
                                 <DropdownMenu right>
-                                    <DropdownItem>
-                                        Option 1
+                                    <DropdownItem onClick={this.handleLogout}>
+                                        <FontAwesomeIcon icon={faSignOutAlt} />
+                                        {" Sair"}
                                     </DropdownItem>
                                 </DropdownMenu>
                             </UncontrolledDropdown>
@@ -62,4 +67,4 @@ class Navegacao extends React.Component {
         );
     }
 }
-export default Navegacao;
+export default withRouter(Navegacao);

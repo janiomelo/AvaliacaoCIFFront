@@ -5,11 +5,10 @@ import {
 } from 'reactstrap';
 import Loading from '../Componentes/Loading';
 import { toast } from 'react-toastify';
-import Moment from 'react-moment';
+import { isEmpty } from 'lodash';
 import server from '../server';
-import './Avaliacao.css';
 
-class AvaliacaoList extends Component {
+export class PacienteList extends Component {
     constructor(props) {
         super(props);
         this.routeChange = this.routeChange.bind(this);
@@ -19,13 +18,14 @@ class AvaliacaoList extends Component {
     }
 
     componentDidMount() {
-        server.get('/avaliacoes/')
+        server.get('/pacientes/')
             .then(res => {
                 this.setState(state => ({
-                    avaliacoes: res.data,
+                    pacientes: res.data,
                     loading: false
                 }));
             }).catch(err => {
+                if (err.response.data instanceof String) toast.error("Ocorreu um erro interno. Tente novamente mais tarde.");
                 for (var key in err.response.data) {
                     let msg = "";
                     if (Array.isArray(err.response.data[key])) {
@@ -49,35 +49,32 @@ class AvaliacaoList extends Component {
 
     routeChange(event) {
         let id = event.target.attributes.getNamedItem('data-id').value;
-        let path = "/avaliacoes/" + id + "/ver/";
+        let path = "/pacientes/" + id + "/ver/";
         this.props.history.push(path);
     }
 
     render() {
         return (
             <div>
-                <h2>Avaliações</h2>
+                <h2>Pacientes</h2>
                 <Loading loading={this.state.loading} />
-                {this.state.avaliacoes ? (
-                    this.state.avaliacoes.map((avaliacao, i) => {
+                {!isEmpty(this.state.pacientes) ? (
+                    this.state.pacientes.map((paciente, i) => {
                         return (
                             <Card className="avaliacaoCardList" key={i}>
                                 <CardBody>
                                     <Row>
                                         <Col sm="11">
                                             <CardTitle>
-                                                Paciente: {avaliacao.paciente.nome}
+                                                Paciente: {paciente.nome}
                                             </CardTitle>
                                             <CardText>
-                                                Avaliação realizada dia {' '}
-                                                <Moment format="DD/MM/YYYY HH:mm">
-                                                    {avaliacao.data}
-                                                </Moment>
+
                                             </CardText>
                                         </Col>
                                         <Col sm="1">
                                             <Button
-                                                data-id={avaliacao.id}
+                                                data-id={paciente.id}
                                                 onClick={this.routeChange}
                                                 className="verButton">Ver</Button>
                                         </Col>
@@ -87,11 +84,9 @@ class AvaliacaoList extends Component {
                         );
                     })
                 ) : (
-                        <Alert color="info">Nenhuma avaliação encontrada</Alert>
+                        <Alert color="info">Nenhum paciente encontrado</Alert>
                     )}
             </div>
         );
     }
 }
-
-export default AvaliacaoList;

@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import {
-    Form, Button
-} from 'reactstrap';
-import axios from 'axios';
+import { Form, Button, Alert } from 'reactstrap';
 import Loading from '../Componentes/Loading';
 import { toast } from 'react-toastify';
 import Categoria from '../Componentes/Categoria';
-import url from '../server';
+import SelecionarPaciente from '../Componentes/SelecionarPaciente';
+import { isEmpty } from 'lodash';
+import server from '../server';
 import './Avaliacao.css';
 
 class AvaliacaoForm extends Component {
@@ -19,9 +18,11 @@ class AvaliacaoForm extends Component {
                 categorias: []
             },
             loading: true,
+            temPaciente: false,
         };
         this.avaliacao = {
-            categorias: []
+            categorias: [],
+            paciente: null
         };
     }
 
@@ -32,6 +33,14 @@ class AvaliacaoForm extends Component {
             }
         });
         this.avaliacao.categorias.push(categoriasRespostas);
+    }
+
+    setPaciente = (paciente) => {
+        this.avaliacao.paciente = paciente;
+        this.setState(state => {
+            state.temPaciente = true;
+            return state;
+        })
     }
 
     validarCategorias() {
@@ -66,7 +75,7 @@ class AvaliacaoForm extends Component {
         });
         let msg;
         this.avaliacao.coreSet = this.state.coreSet.id;
-        axios.post(url + '/avaliar/', this.avaliacao)
+        server.post('/avaliar/', this.avaliacao)
             .then(res => {
                 msg = "Avaliação registrada com sucesso!"
                 toast.update(this.toastId, {
@@ -102,13 +111,34 @@ class AvaliacaoForm extends Component {
     }
 
     componentDidMount() {
-        axios.get(url + '/core-sets/1/')
+        server.get('/core-sets/1/')
             .then(res => {
-                this.setState(state => ({
-                    coreSet: res.data,
-                    loading: false
-                }));
-            })
+                this.setState(state => {
+                    state.coreSet = res.data;
+                    state.loading = false;
+                    return state;
+                });
+            }).catch(err => {
+                switch (err.response.status) {
+                    case 401:
+                        toast.error("Ação permitida apenas para usuários logados.", {
+                            autoClose: 5000,
+                            position: toast.POSITION.TOP_CENTER
+                        });
+                        break;
+
+                    default:
+                        toast.error("Ocorreu um erro interno. Tente novamente mais tarde.", {
+                            autoClose: 5000,
+                            position: toast.POSITION.TOP_CENTER
+                        });
+                        break;
+                }
+                this.setState(state => {
+                    state.loading = false;
+                    return state;
+                });
+            });
     }
 
     render() {
@@ -117,22 +147,27 @@ class AvaliacaoForm extends Component {
                 <h2>Nova Avaliação</h2>
                 <Loading loading={this.state.loading} />
                 <Form onSubmit={this.handleSubmit}>
-                    {this.state.coreSet.categorias ? (
-                        this.state.coreSet.categorias.map((categoria, i) => {
-                            return (
-                                <Categoria
-                                    key={i}
-                                    dados={categoria}
-                                    onResponder={this.setRespostas} />
-                            );
-                        })
-                    ) : null}
-                    <div style={{ display: this.state.loading ? 'none' : 'block' }}>
-                        <Button
-                            type="submit"
-                            className="submitButton"
-                            color="primary">Concluir</Button>
-                    </div>
+                    {!this.state.temPaciente ? (
+                        <SelecionarPaciente onChange={this.setPaciente} />
+                    ) : (!isEmpty(this.state.coreSet.categorias) ? (
+                        <div>
+                            <SelecionarPaciente disabled={true} value={this.avaliacao.paciente} />
+                            {this.state.coreSet.categorias.map((categoria, i) => {
+                                return (
+                                    <Categoria
+                                        key={i}
+                                        dados={categoria}
+                                        onResponder={this.setRespostas} />
+                                );
+                            })}
+                            <Button
+                                type="submit"
+                                className="submitButton"
+                                color="primary">Concluir</Button>
+                        </div>
+                    ) : (
+                            <Alert color="info">Nenhuma categoria encontrada</Alert>
+                        ))}
                 </Form>
             </div>
         );

@@ -24,7 +24,7 @@ class IconeAberto extends Component {
     }
 
     render() {
-        const { categoriaId, aberto } = this.props;
+        const { aberto } = this.props;
         const icone = aberto ? faAngleDoubleUp : faAngleDoubleDown;
         const texto = aberto ? "Fechar categoria" : "Abrir categoria";
         return (

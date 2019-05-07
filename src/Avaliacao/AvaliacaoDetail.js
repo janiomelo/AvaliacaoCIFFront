@@ -2,12 +2,11 @@ import React, { Component } from 'react';
 import {
     Card, CardBody
 } from 'reactstrap';
-import axios from 'axios';
 import Loading from '../Componentes/Loading';
 import AvaliacaoFooter from './AvaliacaoFooter';
 import AvaliacaoCategoria from './AvaliacaoCategoria';
 import AvaliacaoHeader from './AvaliacaoHeader';
-import url from '../server';
+import server from '../server';
 import './Avaliacao.css';
 
 class AvaliacaoDetail extends Component {
@@ -20,7 +19,7 @@ class AvaliacaoDetail extends Component {
 
     componentDidMount() {
         const { id } = this.props.match.params
-        axios.get(url + '/avaliacoes/' + id)
+        server.get('/avaliacoes/' + id)
             .then(res => {
                 this.setState(state => ({
                     avaliacao: res.data,

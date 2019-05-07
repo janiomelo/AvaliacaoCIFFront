@@ -1,0 +1,12 @@
+.home .btn{
+    width: 190px;
+    padding: 5px;
+    height: 90px;
+    margin: 15px;
+    float: left;
+    font-size: 16px;
+}
+.home .btn svg {
+    font-size: 25px;
+    margin-bottom: 5px;
+}

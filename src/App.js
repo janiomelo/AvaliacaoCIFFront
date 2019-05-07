@@ -1,29 +1,47 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import { Container } from 'reactstrap';
 import Home from './Home';
 import { AvaliacaoForm, AvaliacaoList, AvaliacaoDetail } from './Avaliacao';
+import { PacienteList } from './Paciente';
 import Navegacao from './Componentes/Navegacao';
+import { LoginForm, verificaLogin } from './Auth';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
+import auth from './auth';
+import { GlobalStateProvider } from './state';
+
+const PrivateRoute = ({ component: Component, ...rest }) => (
+  <Route {...rest} render={(props) => (
+    auth.possuiToken() === true
+      ? <Component {...props} />
+      : <Redirect to={{
+        pathname: '/login',
+        state: { from: props.location }
+      }} />
+  )} />
+)
 
 class App extends Component {
   render() {
+    verificaLogin()
     return (
-      <div>
-        <Navegacao />
-        <Container fluid>
-          <ToastContainer />
-          <Router>
-            <Route exact path="/" component={Home} />
-            <Route exact path="/avaliacoes/novo" component={AvaliacaoForm} />
-            <Route exact path="/avaliacoes" component={AvaliacaoList} />
-            <Route exact path="/avaliacoes/:id/ver" component={AvaliacaoDetail} />
-          </Router>
-        </Container>
-      </div>
+      <GlobalStateProvider>
+        <Router>
+          <Navegacao />
+          <Container fluid>
+            <ToastContainer />
+            <Route path="/login" component={LoginForm} />
+            <PrivateRoute exact path="/" component={Home} />
+            <PrivateRoute exact path="/avaliacoes/novo" component={AvaliacaoForm} />
+            <PrivateRoute exact path="/avaliacoes" component={AvaliacaoList} />
+            <PrivateRoute exact path="/avaliacoes/:id/ver" component={AvaliacaoDetail} />
+            <PrivateRoute exact path="/pacientes" component={PacienteList} />
+          </Container>
+        </Router>
+      </GlobalStateProvider>
     );
   }
 }
