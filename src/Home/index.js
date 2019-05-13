@@ -43,11 +43,13 @@ const Botoes = ({ onClick }) => {
                     icon={faUsers} />
             ) : null}
 
-            <BotaoAcao
-                cor="secondary"
-                onClick={() => onClick("/avaliacoes")}
-                texto="Avaliações anteriores"
-                icon={faListAlt} />
+            {value.is_staff ? (
+                <BotaoAcao
+                    cor="secondary"
+                    onClick={() => onClick("/avaliacoes")}
+                    texto="Avaliações anteriores"
+                    icon={faListAlt} />
+            ) : null}
 
             <BotaoAcao
                 cor="secondary"
