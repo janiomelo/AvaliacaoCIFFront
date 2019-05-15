@@ -6,6 +6,7 @@ import {
 import Loading from '../Componentes/Loading';
 import { toast } from 'react-toastify';
 import Moment from 'react-moment';
+import { isEmpty } from 'lodash';
 import server from '../server';
 import './Avaliacao.css';
 
@@ -58,7 +59,7 @@ class AvaliacaoList extends Component {
             <div>
                 <h2>Avaliações</h2>
                 <Loading loading={this.state.loading} />
-                {this.state.avaliacoes ? (
+                {!isEmpty(this.state.avaliacoes) ? (
                     this.state.avaliacoes.map((avaliacao, i) => {
                         return (
                             <Card className="avaliacaoCardList" key={i}>

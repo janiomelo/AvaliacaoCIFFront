@@ -155,25 +155,26 @@ class AvaliacaoForm extends Component {
                     <Form onSubmit={this.handleSubmit}>
                         {!this.state.temPaciente ? (
                             <SelecionarPaciente onChange={this.setPaciente} />
-                        ) : (!isEmpty(this.state.coreSet.categorias) ? (
-                            <div>
-                                <SelecionarPaciente disabled={true} value={this.avaliacao.paciente} />
-                                {this.state.coreSet.categorias.map((categoria, i) => {
-                                    return (
-                                        <Categoria
-                                            key={i}
-                                            dados={categoria}
-                                            onResponder={this.setRespostas} />
-                                    );
-                                })}
-                                <Button
-                                    type="submit"
-                                    className="submitButton"
-                                    color="primary">Concluir</Button>
-                            </div>
                         ) : (
-                                <Alert color="info">Nenhuma categoria encontrada</Alert>
-                            ))}
+                                !isEmpty(this.state.coreSet.categorias) ? (
+                                    <div>
+                                        <SelecionarPaciente disabled={true} value={this.avaliacao.paciente} />
+                                        {this.state.coreSet.categorias.map((categoria, i) => {
+                                            return (
+                                                <Categoria
+                                                    key={i}
+                                                    dados={categoria}
+                                                    onResponder={this.setRespostas} />
+                                            );
+                                        })}
+                                        <Button
+                                            type="submit"
+                                            className="submitButton"
+                                            color="primary">Concluir</Button>
+                                    </div>
+                                ) : (
+                                        <Alert color="info">Nenhuma categoria encontrada</Alert>
+                                    ))}
                     </Form>
                 ) : null}
             </div>

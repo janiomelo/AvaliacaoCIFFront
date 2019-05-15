@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
     Card, CardBody
 } from 'reactstrap';
+import { isEmpty } from 'lodash';
 import Loading from '../Componentes/Loading';
 import AvaliacaoFooter from './AvaliacaoFooter';
 import AvaliacaoCategoria from './AvaliacaoCategoria';
@@ -33,7 +34,7 @@ class AvaliacaoDetail extends Component {
             <div>
                 <h2>Detalhes da Avaliação</h2>
                 <Loading loading={this.state.loading} />
-                {this.state.avaliacao ? (
+                {!isEmpty(this.state.avaliacao) ? (
                     <Card>
                         <AvaliacaoHeader history={this.props.history} avaliacao={this.state.avaliacao} />
                         <CardBody>
