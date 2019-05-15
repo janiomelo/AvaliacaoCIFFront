@@ -4,6 +4,7 @@ import Loading from '../Componentes/Loading';
 import { toast } from 'react-toastify';
 import Categoria from '../Componentes/Categoria';
 import SelecionarPaciente from '../Componentes/SelecionarPaciente';
+import { setFontesInformacao } from '../state';
 import { isEmpty } from 'lodash';
 import server from '../server';
 import './Avaliacao.css';
@@ -139,6 +140,10 @@ class AvaliacaoForm extends Component {
                     return state;
                 });
             });
+        server.get('/fontes-informacao')
+            .then(res => {
+                setFontesInformacao(res.data);
+            })
     }
 
     render() {

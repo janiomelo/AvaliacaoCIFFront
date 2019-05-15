@@ -3,6 +3,8 @@ import {
     CustomInput
 } from 'reactstrap';
 import server from '../../server';
+import { useGlobalState } from '../../state';
+import { isEmpty } from 'lodash';
 import './FonteInformacao.css';
 
 
@@ -29,6 +31,24 @@ class RadioInput extends Component {
         );
     }
 }
+const Fontes = (props) => {
+    const [value] = useGlobalState('fontesInformacao');
+    return (
+        <div className="clearfix">
+            {value ? (
+                value.map((fonte, i) => {
+                    return (
+                        <RadioInput
+                            key={i}
+                            dados={fonte}
+                            pergunta={props.perguntaId}
+                            onChange={props.onChange} />
+                    );
+                })
+            ) : null}
+        </div>
+    )
+}
 
 class FonteInformacao extends Component {
     constructor(props) {
@@ -41,14 +61,6 @@ class FonteInformacao extends Component {
         this.props.onChange(event.target.value);
     }
 
-    componentDidMount() {
-        server.get('/fontes-informacao')
-            .then(res => {
-                this.setState(state => ({
-                    fontesInformacao: res.data
-                }));
-            })
-    }
     render() {
         const { perguntaId } = this.props;
         return (
@@ -56,19 +68,7 @@ class FonteInformacao extends Component {
                 <span className="labelFonteInformacao">
                     Fonte da Informação
                 </span>
-                <div className="clearfix">
-                    {this.state.fontesInformacao ? (
-                        this.state.fontesInformacao.map((fonte, i) => {
-                            return (
-                                <RadioInput
-                                    key={i}
-                                    dados={fonte}
-                                    pergunta={perguntaId}
-                                    onChange={this.changeRadioInput} />
-                            );
-                        })
-                    ) : null}
-                </div>
+                <Fontes perguntaId={perguntaId} onChange={this.changeRadioInput} />
             </div>
         );
     }
