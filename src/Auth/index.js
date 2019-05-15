@@ -27,7 +27,6 @@ export class LoginForm extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.state = {
             loading: false,
-            redirectToReferrer: false,
             dadosLogin: {}
         };
     }
@@ -40,10 +39,8 @@ export class LoginForm extends Component {
         server.post("/api-token-auth/", this.state.dadosLogin).then(response => {
             if (isEmpty(response.data)) return toast.error("Impossível realizar login. Tente novamente.");
             auth.authenticate(response.data.token);
-            this.setState(() => ({
-                loading: false,
-                redirectToReferrer: true
-            }))
+            this.props.history.push("/");
+            window.location.reload();
         }).catch(err => {
             for (var key in err.response.data) {
                 let msg = "";
@@ -72,27 +69,24 @@ export class LoginForm extends Component {
     }
 
     render() {
-        const { redirectToReferrer } = this.state
-
-        if (redirectToReferrer === true) {
-            return <Redirect to="/" />
-        }
         return (
             <Row>
                 <Col sm={{ size: 4, offset: 4 }}>
                     <h2>Entre com suas credenciais</h2>
                     <Loading loading={this.state.loading} />
-                    <Form onSubmit={this.handleSubmit}>
-                        <FormGroup>
-                            <Label>Usuário</Label>
-                            <Input type="text" name="username" onChange={this.onChange} />
-                        </FormGroup>
-                        <FormGroup>
-                            <Label>Senha</Label>
-                            <Input type="password" name="password" onChange={this.onChange} />
-                        </FormGroup>
-                        <Button type="submit">Entrar</Button>
-                    </Form>
+                    {!this.state.loading ? (
+                        <Form onSubmit={this.handleSubmit}>
+                            <FormGroup>
+                                <Label>Usuário</Label>
+                                <Input type="text" name="username" onChange={this.onChange} />
+                            </FormGroup>
+                            <FormGroup>
+                                <Label>Senha</Label>
+                                <Input type="password" name="password" onChange={this.onChange} />
+                            </FormGroup>
+                            <Button type="submit">Entrar</Button>
+                        </Form>
+                    ) : null}
                 </Col>
             </Row>
         );

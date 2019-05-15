@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
-import { Container } from 'reactstrap';
+import { Container, Alert } from 'reactstrap';
 import Home from './Home';
 import { AvaliacaoForm, AvaliacaoList, AvaliacaoDetail } from './Avaliacao';
 import { PacienteList } from './Paciente';
@@ -24,6 +24,15 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
   )} />
 )
 
+const NaoImplementado = (props) => {
+  return (
+    <div>
+      <h2>Não disponível</h2>
+      <Alert color="warning">Esta funcionalidade ainda não foi implementada.</Alert>
+    </div>
+  )
+}
+
 class App extends Component {
   render() {
     verificaLogin()
@@ -39,6 +48,9 @@ class App extends Component {
             <PrivateRoute exact path="/avaliacoes" component={AvaliacaoList} />
             <PrivateRoute exact path="/avaliacoes/:id/ver" component={AvaliacaoDetail} />
             <PrivateRoute exact path="/pacientes" component={PacienteList} />
+
+            <PrivateRoute exact path="/pacientes/:id/ver" component={NaoImplementado} />
+            <PrivateRoute exact path="/meu-perfil" component={NaoImplementado} />
           </Container>
         </Router>
       </GlobalStateProvider>

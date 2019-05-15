@@ -33,7 +33,8 @@ class Navegacao extends React.Component {
     }
     handleLogout = () => {
         auth.signout();
-        this.props.history.push("/login")
+        this.props.history.push("/login");
+        window.location.reload();
     }
     toHome = () => {
         this.props.history.push("/")
