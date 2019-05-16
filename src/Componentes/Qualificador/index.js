@@ -26,7 +26,7 @@ class Classificacao extends Component {
 
     render() {
         const { nivel, descricao, prefixo, id } = this.props.dados;
-        let nivelExibicao = `${prefixo}${nivel}`
+        let nivelExibicao = `${prefixo || ''}${nivel}`
         const idCampo = "id-" + this.idInput;
         return (
             <div id={this.idInput} className="float-left ml-2">
