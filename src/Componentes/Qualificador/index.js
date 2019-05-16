@@ -25,7 +25,8 @@ class Classificacao extends Component {
     }
 
     render() {
-        const { nivel, descricao, id } = this.props.dados;
+        const { nivel, descricao, prefixo, id } = this.props.dados;
+        let nivelExibicao = `${prefixo}${nivel}`
         const idCampo = "id-" + this.idInput;
         return (
             <div id={this.idInput} className="float-left ml-2">
@@ -34,7 +35,7 @@ class Classificacao extends Component {
                     id={idCampo}
                     name={this.name}
                     value={id}
-                    label={nivel}
+                    label={nivelExibicao}
                     onChange={this.props.onChange} />
                 <Tooltip
                     placement="top"
