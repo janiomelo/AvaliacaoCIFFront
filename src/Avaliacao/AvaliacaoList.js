@@ -59,7 +59,7 @@ class AvaliacaoList extends Component {
             <div>
                 <h2>Avaliações</h2>
                 <Loading loading={this.state.loading} />
-                {!isEmpty(this.state.avaliacoes) ? (
+                {!this.state.loading ? (!isEmpty(this.state.avaliacoes) ? (
                     this.state.avaliacoes.map((avaliacao, i) => {
                         return (
                             <Card className="avaliacaoCardList" key={i}>
@@ -89,7 +89,7 @@ class AvaliacaoList extends Component {
                     })
                 ) : (
                         <Alert color="info">Nenhuma avaliação encontrada</Alert>
-                    )}
+                    )) : null}
             </div>
         );
     }

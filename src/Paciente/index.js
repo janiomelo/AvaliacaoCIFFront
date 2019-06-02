@@ -58,7 +58,7 @@ export class PacienteList extends Component {
             <div>
                 <h2>Pacientes</h2>
                 <Loading loading={this.state.loading} />
-                {!isEmpty(this.state.pacientes) ? (
+                {!this.state.loading ? (!isEmpty(this.state.pacientes) ? (
                     this.state.pacientes.map((paciente, i) => {
                         return (
                             <Card className="avaliacaoCardList" key={i}>
@@ -85,7 +85,7 @@ export class PacienteList extends Component {
                     })
                 ) : (
                         <Alert color="info">Nenhum paciente encontrado</Alert>
-                    )}
+                    )) : null}
             </div>
         );
     }
