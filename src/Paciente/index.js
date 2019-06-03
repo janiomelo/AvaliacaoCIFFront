@@ -3,6 +3,7 @@ import {
     Card, Button, CardBody, CardTitle, CardText, Row, Col,
     Alert
 } from 'reactstrap';
+import { Link } from 'react-router-dom';
 import Loading from '../Componentes/Loading';
 import { toast } from 'react-toastify';
 import { isEmpty } from 'lodash';
@@ -55,8 +56,10 @@ export class PacienteList extends Component {
 
     render() {
         return (
-            <div>
-                <h2>Pacientes</h2>
+            <section>
+                <header>
+                    <Link to="/">Home</Link>{" / Pacientes"}
+                </header>
                 <Loading loading={this.state.loading} />
                 {!this.state.loading ? (!isEmpty(this.state.pacientes) ? (
                     this.state.pacientes.map((paciente, i) => {
@@ -86,7 +89,7 @@ export class PacienteList extends Component {
                 ) : (
                         <Alert color="info">Nenhum paciente encontrado</Alert>
                     )) : null}
-            </div>
+            </section>
         );
     }
 }

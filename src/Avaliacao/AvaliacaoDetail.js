@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
     Card, CardBody
 } from 'reactstrap';
+import { Link } from 'react-router-dom';
 import { isEmpty } from 'lodash';
 import Loading from '../Componentes/Loading';
 import AvaliacaoFooter from './AvaliacaoFooter';
@@ -32,7 +33,10 @@ class AvaliacaoDetail extends Component {
     render() {
         return (
             <div>
-                <h2>Detalhes da Avaliação</h2>
+                <header>
+                    <Link to="/">Home</Link>{" / "}
+                    <Link to="/avaliacoes">Avaliações</Link>{" / Detalhes da avaliação"}
+                </header>
                 <Loading loading={this.state.loading} />
                 {!isEmpty(this.state.avaliacao) ? (
                     <Card>
