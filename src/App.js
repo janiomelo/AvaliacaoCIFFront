@@ -6,7 +6,7 @@ import { AvaliacaoForm, AvaliacaoList, AvaliacaoDetail } from './Avaliacao';
 import { PacienteList, PacienteEdit, PacienteAdd } from './Paciente';
 import { MeuPerfil } from './MeuPerfil';
 import Navegacao from './Componentes/Navegacao';
-import { LoginForm, verificaLogin } from './Auth';
+import { LoginForm, verificaLogin, CadastrarForm } from './Auth';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -44,6 +44,7 @@ class App extends Component {
           <Container fluid>
             <ToastContainer />
             <Route path="/login" component={LoginForm} />
+            <Route path="/cadastre-se" component={CadastrarForm} />
             <PrivateRoute exact path="/" component={Home} />
             <PrivateRoute exact path="/avaliacoes/novo" component={AvaliacaoForm} />
             <PrivateRoute exact path="/avaliacoes" component={AvaliacaoList} />
