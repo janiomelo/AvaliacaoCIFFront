@@ -3,7 +3,8 @@ import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import { Container, Alert } from 'reactstrap';
 import Home from './Home';
 import { AvaliacaoForm, AvaliacaoList, AvaliacaoDetail } from './Avaliacao';
-import { PacienteList, PacienteEdit } from './Paciente';
+import { PacienteList, PacienteEdit, PacienteAdd } from './Paciente';
+import { MeuPerfil } from './MeuPerfil';
 import Navegacao from './Componentes/Navegacao';
 import { LoginForm, verificaLogin } from './Auth';
 import { ToastContainer } from 'react-toastify';
@@ -49,7 +50,8 @@ class App extends Component {
             <PrivateRoute exact path="/avaliacoes/:id/ver" component={AvaliacaoDetail} />
             <PrivateRoute exact path="/pacientes" component={PacienteList} />
             <PrivateRoute exact path="/pacientes/:id/ver" component={PacienteEdit} />
-            <PrivateRoute exact path="/meu-perfil" component={NaoImplementado} />
+            <PrivateRoute exact path="/pacientes/novo" component={PacienteAdd} />
+            <PrivateRoute exact path="/meu-perfil" component={MeuPerfil} />
           </Container>
         </Router>
       </GlobalStateProvider>
