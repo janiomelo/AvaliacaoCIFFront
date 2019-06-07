@@ -92,7 +92,7 @@ export class PacienteEdit extends Component {
                 </FormGroup>
                 <FormGroup>
                     <Label>Sexo:</Label>
-                    <Input name="sexo" type="select" defaultValue={this.state.paciente.sexo} onChange={this.onChange}>
+                    <Input name="sexo" type="select" value={this.state.paciente.sexo} onChange={this.onChange}>
                         <option value="">-- Selecione --</option>
                         <option value="feminino">Feminino</option>
                         <option value="masculino">Masculino</option>
@@ -116,7 +116,7 @@ export class PacienteEdit extends Component {
                 </FormGroup>
                 <FormGroup>
                     <Label>Estado:</Label>
-                    <Input name="estado" type="select" defaultValue={this.state.paciente.estado} onChange={this.onChange} >
+                    <Input name="estado" type="select" value={this.state.paciente.estado} onChange={this.onChange} >
                         <option value="">-- Selecione --</option>
                         <option value='AC'>Acre</option>
                         <option value='AL'>Alagoas</option>
@@ -150,7 +150,7 @@ export class PacienteEdit extends Component {
                 </FormGroup>
                 <FormGroup>
                     <Label>Observações:</Label>
-                    <Input name="observacoes" type="textarea" defaultValue={this.state.paciente.observacoes} onChange={this.onChange} />
+                    <Input name="observacoes" type="textarea" value={this.state.paciente.observacoes} onChange={this.onChange} />
                 </FormGroup>
                 <Button color="primary" type="submit" className="submitButton">Salvar Alterações</Button>
             </Form>

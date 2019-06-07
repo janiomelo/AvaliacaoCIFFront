@@ -33,11 +33,15 @@ export class CadastrarForm extends Component {
         this.setState(() => ({
             loading: true,
         }))
-        server.post("/api-token-auth/", this.state.dados).then(response => {
-            if (isEmpty(response.data)) return toast.error("Impossível realizar login. Tente novamente.");
-            auth.authenticate(response.data.token);
-            this.props.history.push("/");
-            window.location.reload();
+        server.post("/novo-usuario/", this.state.dados).then(response => {
+            if (isEmpty(response.data)) return toast.error("Impossível realizar cadastro. Tente novamente.");
+            toast.update(this.toastId, {
+                render: "Cadastro realizado com sucesso! Entre com seu login e senha",
+                type: toast.TYPE.SUCCESS,
+                autoClose: 5000,
+                position: toast.POSITION.TOP_CENTER
+            });
+            this.props.history.push("/login");
         }).catch(err => {
             for (var key in err.response.data) {
                 let msg = "";
